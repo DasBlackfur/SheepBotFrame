@@ -1,2 +1,5 @@
+# Exclude IDE Files
+.idea
+
 # Project exclude paths
 /venv/
