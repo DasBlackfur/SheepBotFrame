@@ -31,6 +31,7 @@ def printversion():
 
 
 async def download():
+    await bot.change_presence(activity=discord.Game(name=" downloading Message History"))
     for trainchannel in config["trainchannels"]:
         channel = await bot.fetch_channel(trainchannel[0])
         counter = 0
@@ -39,6 +40,8 @@ async def download():
             messages[counter] = message.content
             counter += 1
         messages.reverse()
+        with open(str(trainchannel[0]) + ".yml", "w") as logfile:
+            yaml.dump(messages, logfile)
 
 
 @bot.event
