@@ -12,10 +12,6 @@ config = {"botname": "Sheepy",
           "corpus": ["chatterbot.corpus.english", "chatterbot.corpus.uswest"],
           "token": "NzU2NTgxNjQ0NTY3MTgzMzcw.X2T7kA.J7RthGGYMjgE_ZreLrGo2A3tCvg"}
 
-file = open("token", "r")
-token = file.read()
-file.close()
-
 bot = discord.Client()
 chatbot = ChatBot(config["botname"])
 
@@ -32,6 +28,7 @@ def printversion():
 
 async def download():
     await bot.change_presence(activity=discord.Game(name=" downloading Message History"))
+    os.system("rm *.tmp.yml")
     for trainchannel in config["trainchannels"]:
         channel = await bot.fetch_channel(trainchannel[0])
         counter = 0
@@ -40,8 +37,20 @@ async def download():
             messages[counter] = message.content
             counter += 1
         messages.reverse()
-        with open(str(trainchannel[0]) + ".yml", "w") as logfile:
+        with open("chatlogs/" + str(trainchannel[0]) + ".tmp.yml", "w") as logfile:
             yaml.dump(messages, logfile)
+
+
+async def train():
+    os.system("rm db.sqlite3")
+    corpustrainer = ChatterBotCorpusTrainer(chatbot)
+    listtrainer = ListTrainer(chatbot)
+    for corpus in config["corpus"]:
+        corpustrainer.train(corpus)
+    for log in os.listdir("chatlogs"):
+        with open(log, "r") as logfile:
+            log = yaml.load(logfile)
+        listtrainer.train(log)
 
 
 @bot.event
@@ -65,6 +74,8 @@ async def on_ready():
             await bot.close()
     if tasks[0]:
         await download()
+    if tasks[1]:
+        await train()
 
 
-bot.run(token)
+bot.run(config["token"])

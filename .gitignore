@@ -1,5 +1,9 @@
 # Exclude IDE Files
-.idea
+.idea/
 
 # Exclude VENV
-/venv/
+venv/
+
+# Exclude ChatLogs
+
+chatlogs/*
