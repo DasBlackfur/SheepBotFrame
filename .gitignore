@@ -3,6 +3,3 @@
 
 # Exclude VENV
 /venv/
-
-# Exclude Config Files
-token
