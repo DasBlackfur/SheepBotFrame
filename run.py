@@ -28,7 +28,7 @@ def printversion():
 
 async def download():
     await bot.change_presence(activity=discord.Game(name=" downloading Message History"))
-    os.system("rm *.tmp.yml")
+    os.system("rm chatlogs/*.tmp.yml")
     for trainchannel in config["trainchannels"]:
         channel = await bot.fetch_channel(trainchannel[0])
         counter = 0
