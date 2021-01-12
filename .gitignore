@@ -1,5 +1,8 @@
 # Exclude IDE Files
 .idea
 
-# Project exclude paths
+# Exclude VENV
 /venv/
+
+# Exclude Config Files
+token
