@@ -10,13 +10,12 @@ config = {"botname": "Sheepy",
           "filterpings": True,
           "usechannels": [717758904527880253, 772839872557088769, 773980809471197235],
           "trainchannels": [[492412566430154783, 1000], [761462125696385047, 1000]],
-          "corpus": ["chatterbot.corpus.english", "chatterbot.corpus.uswest"]}
+          "corpus": ["chatterbot.corpus.english"]}
 
 with open("token", "r") as tokenfile:
     token = tokenfile.read()
 
 bot = discord.Client()
-chatbot = ChatBot(config["botname"])
 
 tasks = [False, False]
 
@@ -45,7 +44,6 @@ async def download():
 
 
 async def train():
-    os.system("rm db.sqlite3")
     corpustrainer = ChatterBotCorpusTrainer(chatbot)
     listtrainer = ListTrainer(chatbot)
     for corpus in config["corpus"]:
@@ -82,7 +80,11 @@ async def on_ready():
     if tasks[0]:
         await download()
     if tasks[1]:
+        os.system("rm db.sqlite3")
+        global chatbot
+        chatbot = ChatBot(config["botname"])
         await train()
-
+    else:
+        chatbot = ChatBot(config["botname"])
 
 bot.run(token)
