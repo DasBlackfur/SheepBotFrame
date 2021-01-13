@@ -9,8 +9,10 @@ config = {"botname": "Sheepy",
           "filterpings": True,
           "usechannels": [717758904527880253, 772839872557088769, 773980809471197235],
           "trainchannels": [[492412566430154783, 1000], [761462125696385047, 1000]],
-          "corpus": ["chatterbot.corpus.english", "chatterbot.corpus.uswest"],
-          "token": "NzU2NTgxNjQ0NTY3MTgzMzcw.X2T7kA.J7RthGGYMjgE_ZreLrGo2A3tCvg"}
+          "corpus": ["chatterbot.corpus.english", "chatterbot.corpus.uswest"]}
+
+with open("token", "r") as tokenfile:
+    token = tokenfile.read()
 
 bot = discord.Client()
 chatbot = ChatBot(config["botname"])
@@ -82,4 +84,4 @@ async def on_ready():
         await train()
 
 
-bot.run(config["token"])
+bot.run(token)

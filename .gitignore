@@ -4,6 +4,8 @@
 # Exclude VENV
 venv/
 
-# Exclude ChatLogs
+# Exclude ChatLogs, DataBases and the API Token
 
 chatlogs/*
+db.sqlite3
+token
