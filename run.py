@@ -57,21 +57,25 @@ async def train():
 async def on_ready():
     print("Logged in!")
     args = sys.argv
+    args.pop(0)
     for arg in args:
-        if arg == "--help" or "-?":
+        if arg == "--help" or arg == "-?":
             printhelp()
             await bot.close()
-        if arg == "--version" or "-v":
+            raise SystemExit(0)
+        if arg == "--version" or arg == "-v":
             printversion()
             await bot.close()
-        if arg == "--download" or "-d":
+            raise SystemExit(0)
+        if arg == "--download" or arg == "-d":
             tasks[0] = True
-        if arg == "--train" or "-t":
+        if arg == "--train" or arg == "-t":
             tasks[1] = True
         else:
             print(f"Unexspected {arg}")
             printhelp()
             await bot.close()
+            raise SystemExit(1)
     if tasks[0]:
         await download()
     if tasks[1]:
