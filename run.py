@@ -5,7 +5,7 @@ import discord
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
 
-# Checks two
+# Last Check
 # Change this to set the settings
 config = {"botname": "Sheepy",
           "filterpings": True,
