@@ -1,4 +1,3 @@
-# DO NOT CHANGE THIS
 import os
 import sys
 import yaml
@@ -6,16 +5,8 @@ import discord
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
 
-# Change this to set the settings
-config = {"botname": "Sheepy",
-          "filterpings": True,
-          "usechannels": [717758904527880253, 772839872557088769, 773980809471197235],
-          "trainchannels": [[492412566430154783, 1000], [761462125696385047, 1000]],
-          "corpus": ["chatterbot.corpus.english"]}
-
-# DO NOT CHANGE THIS
-with open("token", "r") as tokenfile:
-    token = tokenfile.read()
+with open("config.yml", "r") as file:
+    config = yaml.load(file)
 
 bot = discord.Client()
 
@@ -89,6 +80,7 @@ async def on_ready():
         await train()
         print("Finished train!")
     else:
+        global chatbot
         chatbot = ChatBot(config["botname"])
 
-bot.run(token)
+bot.run(config["token"])

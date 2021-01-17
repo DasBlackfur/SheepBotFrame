@@ -4,8 +4,8 @@
 # Exclude VENV
 venv/
 
-# Exclude ChatLogs, DataBases and the API Token
+# Exclude ChatLogs, DataBases and the Config
 
 chatlogs/
 db.sqlite3
-token
+config.yml
