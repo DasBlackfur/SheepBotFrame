@@ -49,6 +49,7 @@ async def train():
 
 @bot.event
 async def on_ready():
+    global chatbot
     print("Logged in!")
     args = sys.argv
     args.pop(0)
@@ -75,12 +76,10 @@ async def on_ready():
         print("Finished download!")
     if tasks[1]:
         os.system("rm db.sqlite3")
-        global chatbot
         chatbot = ChatBot(config["botname"])
         await train()
         print("Finished train!")
     else:
-        global chatbot
         chatbot = ChatBot(config["botname"])
 
 bot.run(config["token"])
