@@ -1,3 +1,4 @@
+# DO NOT CHANGE THIS
 import os
 import sys
 import yaml
@@ -5,7 +6,6 @@ import discord
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
 
-# Last Check
 # Change this to set the settings
 config = {"botname": "Sheepy",
           "filterpings": True,
@@ -13,6 +13,7 @@ config = {"botname": "Sheepy",
           "trainchannels": [[492412566430154783, 1000], [761462125696385047, 1000]],
           "corpus": ["chatterbot.corpus.english"]}
 
+# DO NOT CHANGE THIS
 with open("token", "r") as tokenfile:
     token = tokenfile.read()
 
@@ -50,7 +51,7 @@ async def train():
     for corpus in config["corpus"]:
         corpustrainer.train(corpus)
     for log in os.listdir("chatlogs"):
-        with open(log, "r") as logfile:
+        with open(f"chatlogs/{log}", "r") as logfile:
             log = yaml.load(logfile)
         listtrainer.train(log)
 
@@ -65,13 +66,13 @@ async def on_ready():
             printhelp()
             await bot.close()
             raise SystemExit(0)
-        if arg == "--version" or arg == "-v":
+        elif arg == "--version" or arg == "-v":
             printversion()
             await bot.close()
             raise SystemExit(0)
-        if arg == "--download" or arg == "-d":
+        elif arg == "--download" or arg == "-d":
             tasks[0] = True
-        if arg == "--train" or arg == "-t":
+        elif arg == "--train" or arg == "-t":
             tasks[1] = True
         else:
             print(f"Unexspected {arg}")
@@ -80,11 +81,13 @@ async def on_ready():
             raise SystemExit(1)
     if tasks[0]:
         await download()
+        print("Finished download!")
     if tasks[1]:
         os.system("rm db.sqlite3")
         global chatbot
         chatbot = ChatBot(config["botname"])
         await train()
+        print("Finished train!")
     else:
         chatbot = ChatBot(config["botname"])
 

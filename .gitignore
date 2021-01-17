@@ -6,6 +6,6 @@ venv/
 
 # Exclude ChatLogs, DataBases and the API Token
 
-chatlogs/*
+chatlogs/
 db.sqlite3
 token
