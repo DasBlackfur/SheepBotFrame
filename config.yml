@@ -1,4 +1,5 @@
 botname: "ChatBot"
+excludeprefix: "!"
 filterpings: True
 usechannels: []
 trainchannels: [[]]
