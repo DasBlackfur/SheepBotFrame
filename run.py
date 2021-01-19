@@ -11,6 +11,7 @@ with open("config.yml", "r") as file:
 bot = discord.Client()
 
 tasks = [False, False]
+finished = False
 
 
 def printhelp():
