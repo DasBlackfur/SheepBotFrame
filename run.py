@@ -89,27 +89,32 @@ async def on_ready():
         print("Finished train!")
     else:
         chatbot = ChatBot(config["botname"])
+    global finished
+    finished = True
 
 
 @bot.event
 async def on_message(message):
-    if message.author != bot.user:
-        if message.channel.id in config["usechannels"]:
-            if message.content.startswith(config["exclutionprefix"]):
-                return
-            else:
-                response = chatbot.get_response(message.content)
-                response = response.__str__()
-                if config["filterpings"]:
-                    position = response.find("<@!")
-                    while position != -1:
-                        response = remove_mention("l", response, position)
+    if finished:
+        if message.author != bot.user:
+            if message.channel.id in config["usechannels"]:
+                if message.content.startswith(config["exclutionprefix"]):
+                    return
+                else:
+                    response = chatbot.get_response(message.content)
+                    response = response.__str__()
+                    if config["filterpings"]:
                         position = response.find("<@!")
-                    position = response.find("<@")
-                    while position != -1:
-                        response = remove_mention("s", response, position)
+                        while position != -1:
+                            response = remove_mention("l", response, position)
+                            position = response.find("<@!")
                         position = response.find("<@")
-                await message.channel.send(response)
-                print(f"Input was given: '{message.content}', this output was found: '{response}'")
+                        while position != -1:
+                            response = remove_mention("s", response, position)
+                            position = response.find("<@")
+                    await message.channel.send(response)
+                    print(f"Input was given: '{message.content}', this output was found: '{response}'")
+    else:
+        await message.channel.send("Sorry, the Bot is still performing some tasks.")
 
 bot.run(config["token"])
