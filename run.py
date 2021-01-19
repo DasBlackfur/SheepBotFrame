@@ -22,6 +22,13 @@ def printversion():
     print("Somer Version")
 
 
+def remove_mention(m, s, i):
+    if m == "s":
+        return s[0:i] + s[i+21:]
+    elif m == "l":
+        return s[:i] + s[i+22:]
+
+
 async def download():
     await bot.change_presence(activity=discord.Game(name=" downloading Message History"))
     os.system("rm chatlogs/*.tmp.yml")
@@ -82,5 +89,27 @@ async def on_ready():
         print("Finished train!")
     else:
         chatbot = ChatBot(config["botname"])
+
+
+@bot.event
+async def on_message(message):
+    if message.author != bot.user:
+        if message.channel.id in config["usechannels"]:
+            if message.content.startswith(config["exclutionprefix"]):
+                return
+            else:
+                response = chatbot.get_response(message.content)
+                response = response.__str__()
+                if config["filterpings"]:
+                    position = response.find("<@!")
+                    while position != -1:
+                        response = remove_mention("l", response, position)
+                        position = response.find("<@!")
+                    position = response.find("<@")
+                    while position != -1:
+                        response = remove_mention("s", response, position)
+                        position = response.find("<@")
+                await message.channel.send(response)
+                print(f"Input was given: '{message.content}', this output was found: '{response}'")
 
 bot.run(config["token"])
