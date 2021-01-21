@@ -91,6 +91,7 @@ async def on_ready():
         chatbot = ChatBot(config["botname"])
     global finished
     finished = True
+    print("Starting to listen to messages...")
 
 
 @bot.event
@@ -98,7 +99,7 @@ async def on_message(message):
     if finished:
         if message.author != bot.user:
             if message.channel.id in config["usechannels"]:
-                if message.content.startswith(config["exclutionprefix"]):
+                if message.content.startswith(config["excludeprefix"]):
                     return
                 else:
                     response = chatbot.get_response(message.content)

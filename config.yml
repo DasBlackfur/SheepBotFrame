@@ -1,7 +1,0 @@
-botname: "ChatBot"
-excludeprefix: "!"
-filterpings: True
-usechannels: []
-trainchannels: [[]]
-corpus: ["chatterbot.english"]
-token: "TOKEN"
