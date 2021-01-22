@@ -25,7 +25,7 @@ def printhelp():
 
 
 def printversion():
-    print("SheepBotFrame Beta 1.41")
+    print("SheepBotFrame Beta 1.43")
 
 
 def remove_mention(m, s, i):
@@ -51,6 +51,7 @@ async def download():
 
 
 async def train():
+    await bot.change_presence(activity=discord.Game(name=" training, training and training..."))
     corpustrainer = ChatterBotCorpusTrainer(chatbot)
     listtrainer = ListTrainer(chatbot)
     for corpus in config["corpus"]:
@@ -63,6 +64,7 @@ async def train():
 
 @bot.event
 async def on_ready():
+    await bot.change_presence(activity=discord.Game(name=" listening for messages!"))
     global chatbot
     print("Logged in!")
     args = sys.argv
