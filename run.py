@@ -15,11 +15,17 @@ finished = False
 
 
 def printhelp():
-    print("Help lol")
+    printversion()
+    print("Thanks for using SheepBotFrame!")
+    print("Possible command options:")
+    print("--help     (-?) Displays this help page")
+    print("--version  (-v) Displays the version")
+    print("--download (-d) Adds downloading chatlogs to the task list")
+    print("--train    (-t) Added training to the task list")
 
 
 def printversion():
-    print("Somer Version")
+    print("SheepBotFrame Beta 1.40")
 
 
 def remove_mention(m, s, i):
