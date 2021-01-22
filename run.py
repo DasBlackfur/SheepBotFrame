@@ -24,9 +24,9 @@ def printversion():
 
 def remove_mention(m, s, i):
     if m == "s":
-        return s[0:i] + s[i+21:]
+        return s[0:i] + s[i + 21:]
     elif m == "l":
-        return s[:i] + s[i+22:]
+        return s[:i] + s[i + 22:]
 
 
 async def download():
@@ -96,12 +96,12 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    if finished:
-        if message.author != bot.user:
-            if message.channel.id in config["usechannels"]:
-                if message.content.startswith(config["excludeprefix"]):
-                    return
-                else:
+    if message.author != bot.user:
+        if message.channel.id in config["usechannels"]:
+            if message.content.startswith(config["excludeprefix"]):
+                return
+            else:
+                if finished:
                     response = chatbot.get_response(message.content)
                     response = response.__str__()
                     if config["filterpings"]:
@@ -115,7 +115,8 @@ async def on_message(message):
                             position = response.find("<@")
                     await message.channel.send(response)
                     print(f"Input was given: '{message.content}', this output was found: '{response}'")
-    else:
-        await message.channel.send("Sorry, the Bot is still performing some tasks.")
+                else:
+                    await message.channel.send("Sorry, the Bot is still performing some tasks.")
+
 
 bot.run(config["token"])
