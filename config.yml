@@ -3,5 +3,5 @@ filterpings: True
 excludeprefix: "!"
 usechannels: []
 trainchannels: [[]]
-corpus: ["chatterbot.english"]
+corpus: ["chatterbot.corpus.english"]
 token: "TOKEN"
