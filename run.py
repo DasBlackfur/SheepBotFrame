@@ -25,7 +25,7 @@ def printhelp():
 
 
 def printversion():
-    print("SheepBotFrame Beta 1.44")
+    print("SheepBotFrame Beta 1.46")
 
 
 def remove_mention(m, s, i):
