@@ -4,11 +4,11 @@ Simple Program to run custom AI Bots on Discord
 
 ## How to install
 
-`
+```bash
 git clone https://github.com/TheBlackfurGuy/SheepBotFrame.git
 cd SheepBotFrame
 pip install -r requirements.txt
-`
+```
 ## How to set up
 Edit the config.yml file to your likings. <br>
 Change "botname" to the name of the bot (currently has no effect) <br>
