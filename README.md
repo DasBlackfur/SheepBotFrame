@@ -16,7 +16,7 @@ Change "filterpings" to false if you don't want to have pings filtered out. <br>
 Change "excludeprefix" to set the text sequence that will hide a message from the bot <br>
 Change "usechannels" to the IDs of the channels the bot should react in <br>
 Change "trainchannels" to the channel IDs and ammounts the bot should download <br>
-Change "corpus" to all the corpus the bot should train
+Change "corpus" to all the corpus the bot should train <br>
 Change "token" to the Bots token
 
 ## How to run
