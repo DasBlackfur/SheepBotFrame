@@ -25,7 +25,7 @@ def printhelp():
 
 
 def printversion():
-    print("SheepBotFrame Beta 1.43")
+    print("SheepBotFrame Beta 1.44")
 
 
 def remove_mention(m, s, i):
@@ -36,6 +36,7 @@ def remove_mention(m, s, i):
 
 
 async def download():
+    print("Starting download...")
     await bot.change_presence(activity=discord.Game(name=" downloading Message History"))
     os.system("rm chatlogs/*.tmp.yml")
     for trainchannel in config["trainchannels"]:
@@ -51,6 +52,7 @@ async def download():
 
 
 async def train():
+    print("Starting training...")
     await bot.change_presence(activity=discord.Game(name=" training, training and training..."))
     corpustrainer = ChatterBotCorpusTrainer(chatbot)
     listtrainer = ListTrainer(chatbot)
@@ -62,11 +64,8 @@ async def train():
         listtrainer.train(log)
 
 
-@bot.event
-async def on_ready():
-    await bot.change_presence(activity=discord.Game(name=" listening for messages!"))
+async def startup():
     global chatbot
-    print("Logged in!")
     args = sys.argv
     args.pop(0)
     for arg in args:
@@ -100,6 +99,15 @@ async def on_ready():
     global finished
     finished = True
     print("Starting to listen to messages...")
+    await bot.change_presence(activity=discord.Game(name=" listening for messages!"))
+
+
+@bot.event
+async def on_ready():
+    await bot.change_presence(activity=discord.Game(name=" listening for messages!"))
+    print("Logged in!")
+    if not finished:
+        await startup()
 
 
 @bot.event
