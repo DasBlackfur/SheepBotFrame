@@ -25,7 +25,7 @@ def printhelp():
 
 
 def printversion():
-    print("SheepBotFrame Beta 1.46")
+    print("SheepBotFrame Beta 1.49")
 
 
 def remove_mention(m, s, i):
@@ -44,7 +44,10 @@ async def download():
         counter = 0
         messages = [None] * trainchannel[1]
         async for message in channel.history(limit=trainchannel[1]):
-            messages[counter] = message.content
+            if message.content is None:
+                print("Found Null message, ignoring...")
+            else:
+                messages[counter] = message.content
             counter += 1
         messages.reverse()
         with open("chatlogs/" + str(trainchannel[0]) + ".tmp.yml", "w") as logfile:
