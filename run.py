@@ -2,6 +2,7 @@ import os
 import sys
 import yaml
 import discord
+import datetime
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
 
@@ -41,17 +42,35 @@ async def download():
     os.system("rm chatlogs/*.tmp.yml")
     for trainchannel in config["trainchannels"]:
         channel = await bot.fetch_channel(trainchannel[0])
+        to_fetch = trainchannel[1]
+        messages = [""] * to_fetch
         counter = 0
-        messages = [None] * trainchannel[1]
-        async for message in channel.history(limit=trainchannel[1]):
-            if message.content is None:
-                print("Found Null message, ignoring...")
-            else:
-                messages[counter] = message.content
-            counter += 1
+        latest = datetime.datetime.now()
+        while to_fetch > 0:
+            print(f"{trainchannel[1]-to_fetch}/{trainchannel[1]} Messages Downloaded", end='\r')
+            async for message in channel.history(limit=500, before=latest):
+                if message.content is None:
+                    print("Found Null message, skipping...")
+                else:
+                    messages[counter] = message.content
+                counter += 1
+                latest = message.created_at
+            to_fetch -= 1000
         messages.reverse()
-        with open("chatlogs/" + str(trainchannel[0]) + ".tmp.yml", "w") as logfile:
+        with open("chatlogs/"+ str(trainchannel[0])+".tmp.yml", "w") as logfile:
             yaml.dump(messages, logfile)
+        # channel = await bot.fetch_channel(trainchannel[0])
+        # counter = 0
+        # messages = [None] * trainchannel[1]
+        # async for message in channel.history(limit=trainchannel[1]):
+        #     if message.content is None:
+        #         print("Found Null message, ignoring...")
+        #     else:
+        #         messages[counter] = message.content
+        #     counter += 1
+        # messages.reverse()
+        # with open("chatlogs/" + str(trainchannel[0]) + ".tmp.yml", "w") as logfile:
+        #     yaml.dump(messages, logfile)
 
 
 async def train():
