@@ -59,19 +59,6 @@ async def download():
         messages.reverse()
         with open("chatlogs/"+ str(trainchannel[0])+".tmp.yml", "w") as logfile:
             yaml.dump(messages, logfile)
-        # channel = await bot.fetch_channel(trainchannel[0])
-        # counter = 0
-        # messages = [None] * trainchannel[1]
-        # async for message in channel.history(limit=trainchannel[1]):
-        #     if message.content is None:
-        #         print("Found Null message, ignoring...")
-        #     else:
-        #         messages[counter] = message.content
-        #     counter += 1
-        # messages.reverse()
-        # with open("chatlogs/" + str(trainchannel[0]) + ".tmp.yml", "w") as logfile:
-        #     yaml.dump(messages, logfile)
-
 
 async def train():
     print("Starting training...")
